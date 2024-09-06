@@ -1,11 +1,15 @@
 package no.hvl.dat250.expass1.domains;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Instant;
 
 public class Polls {
 
     public static class User {
+        @JsonProperty
         private String username;
+        @JsonProperty
         private String email;
 
         public User() {}
@@ -25,6 +29,15 @@ public class Polls {
         public void setEmail(String email) {
             this.email = email;
         }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "username='" + username + '\'' +
+                    ", email='" + email + '\'' +
+                    '}';
+        }
+
     }
 
     public static class Poll {

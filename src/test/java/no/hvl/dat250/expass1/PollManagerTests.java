@@ -25,15 +25,9 @@ public class PollManagerTests {
     @Autowired
     private PollManager pollManager;
 
-    @BeforeEach
-    public void setup() {
-        pollManager = new PollManager();
-    }
-
     @Test
     public void testCreateNewUser() throws Exception {
-        String userInfoJson = "{ \"username\": \"test_user\", \"email\": \"test_user@example.com\"}";
-
+        String userInfoJson = "{ \"username\": \"tester\", \"email\": \"tester@example.com\"}";
 
         MvcResult result = mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -41,9 +35,13 @@ public class PollManagerTests {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Polls.User user = pollManager.getUserByUsername("test_user");
+        System.out.println("User added status: " + result.getResponse().getStatus());
+
+        // Verify that the user is present in the PollManager
+        Polls.User user = pollManager.getUserByUsername("tester");
+        System.out.println("User from PollManager: " + user);
         assertThat(user).isNotNull();
-        assertThat(user.getUsername()).isEqualTo("test_user");
-        assertThat(user.getEmail()).isEqualTo("test_user@example.com");
+        assertThat(user.getUsername()).isEqualTo("tester");
+        assertThat(user.getEmail()).isEqualTo("tester@example.com");
     }
 }
