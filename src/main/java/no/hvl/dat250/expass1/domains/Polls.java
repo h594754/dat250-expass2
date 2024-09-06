@@ -3,6 +3,7 @@ package no.hvl.dat250.expass1.domains;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
+import java.util.List;
 
 public class Polls {
 
@@ -11,6 +12,8 @@ public class Polls {
         private String username;
         @JsonProperty
         private String email;
+
+        private List<Vote> votes;
 
         public User() {}
 
@@ -30,6 +33,14 @@ public class Polls {
             this.email = email;
         }
 
+        public List<Vote> getVotes() {
+            return votes;
+        }
+
+        public void setVotes(List<Vote> votes) {
+            this.votes = votes;
+        }
+
         @Override
         public String toString() {
             return "User{" +
@@ -41,11 +52,25 @@ public class Polls {
     }
 
     public static class Poll {
+        private String id;
         private String question;
         private Instant publishedAt;
         private Instant validUntil;
+        private List<Vote> votes;
+
+        private List<VoteOption> voteOptions;
+
+        private String creator;
 
         public Poll() {}
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getQuestion() {
             return question;
@@ -70,10 +95,37 @@ public class Polls {
         public void setValidUntil(Instant validUntil) {
             this.validUntil = validUntil;
         }
+
+        public List<VoteOption> getVoteOptions() {
+            return voteOptions;
+        }
+
+        public void setVoteOptions(List<VoteOption> voteOptions) {
+            this.voteOptions = voteOptions;
+        }
+
+        public String getCreator() {
+            return creator;
+        }
+
+        public void setCreator(String creator) {
+            this.creator = creator;
+        }
+
+        public List<Vote> getVotes() {
+            return votes;
+        }
+
+        public void setVotes(List<Vote> votes) {
+            this.votes = votes;
+        }
     }
 
     public static class Vote {
+        private String voteId;
         private Instant publishedAt;
+        private User voter;
+        private VoteOption voteOption;
 
         public Vote() {}
 
@@ -84,13 +136,49 @@ public class Polls {
         public void setPublishedAt(Instant publishedAt) {
             this.publishedAt = publishedAt;
         }
+
+        public User getVoter() {
+            return voter;
+        }
+
+        public void setVoter(User voter) {
+            this.voter = voter;
+        }
+
+        public VoteOption getVoteOption() {
+            return voteOption;
+        }
+
+        public void setVoteOption(VoteOption voteOption) {
+            this.voteOption = voteOption;
+        }
+
+        public String getVoteId() {
+            return voteId;
+        }
+
+        public void setVoteId(String voteId) {
+            this.voteId = voteId;
+        }
     }
 
     public static class VoteOption {
+        private String optionId;
         private String caption;
         private int presentationOrder;
+        private Poll poll;
+
+        private List<Vote> votes;
 
         public VoteOption() {}
+
+        public String getOptionId() {
+            return optionId;
+        }
+
+        public void setOptionId(String optionId) {
+            this.optionId = optionId;
+        }
 
         public String getCaption() {
             return caption;
@@ -106,6 +194,22 @@ public class Polls {
 
         public void setPresentationOrder(int presentationOrder) {
             this.presentationOrder = presentationOrder;
+        }
+
+        public Poll getPoll() {
+            return poll;
+        }
+
+        public void setPoll(Poll poll) {
+            this.poll = poll;
+        }
+
+        public List<Vote> getVotes() {
+            return votes;
+        }
+
+        public void setVotes(List<Vote> votes) {
+            this.votes = votes;
         }
     }
 

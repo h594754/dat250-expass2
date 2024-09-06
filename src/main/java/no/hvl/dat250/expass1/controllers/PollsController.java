@@ -3,25 +3,26 @@ package no.hvl.dat250.expass1.controllers;
 import no.hvl.dat250.expass1.components.PollManager;
 import no.hvl.dat250.expass1.domains.Polls;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class PollsController {
     @Autowired
     private PollManager pollManager;
 
-    @GetMapping("/listUsers")
-    public Collection<Polls.User> listUsers() {
-        return pollManager.getAllUsers();
+    @PostMapping("/createPoll")
+    public void createPoll(@RequestParam String username, @RequestBody Polls.Poll poll) {
+        pollManager.createPoll(poll, username);
     }
-    @PostMapping("/users")
-    public void createUser(@RequestBody Polls.User user) {
-        pollManager.addUser(user);
+
+    @GetMapping("/listPolls")
+    public List<Polls.Poll> listAllPolls() {
+        return pollManager.getAllPolls();
     }
+
+
 
 }
