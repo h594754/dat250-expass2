@@ -1,6 +1,7 @@
 # dat250-expass2
 
 ### Endpoints
+Can also be found in http://127.0.0.1:8080/swagger-ui/index.html
 #### In user controller
 ##### to list users
 - "/listUsers"
