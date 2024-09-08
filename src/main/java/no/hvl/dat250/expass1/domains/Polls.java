@@ -3,6 +3,7 @@ package no.hvl.dat250.expass1.domains;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Polls {
@@ -56,9 +57,8 @@ public class Polls {
         private String question;
         private Instant publishedAt;
         private Instant validUntil;
-        private List<Vote> votes;
-
-        private List<VoteOption> voteOptions;
+        private List<Vote> votes = new ArrayList<>();  // Initialize the list
+        private List<VoteOption> voteOptions = new ArrayList<>();
 
         private String creator;
 
@@ -125,7 +125,7 @@ public class Polls {
         private String voteId;
         private Instant publishedAt;
         private User voter;
-        private VoteOption voteOption;
+        private String optionId;
 
         public Vote() {}
 
@@ -145,12 +145,12 @@ public class Polls {
             this.voter = voter;
         }
 
-        public VoteOption getVoteOption() {
-            return voteOption;
+        public String getOptionId() {
+            return optionId;
         }
 
-        public void setVoteOption(VoteOption voteOption) {
-            this.voteOption = voteOption;
+        public void setOptionId(String optionId) {
+            this.optionId = optionId;
         }
 
         public String getVoteId() {
@@ -168,7 +168,7 @@ public class Polls {
         private int presentationOrder;
         private Poll poll;
 
-        private List<Vote> votes;
+        private List<Vote> votes = new ArrayList<>();
 
         public VoteOption() {}
 

@@ -10,6 +10,7 @@ import java.util.*;
 public class PollManager {
     private final HashMap<String, Polls.User> users = new HashMap<>();
     private final HashMap<String, Polls.Poll> polls = new HashMap<>();
+    private int voteOptionCounter = 0;
 
 
     public void addUser(Polls.User user) {
@@ -37,6 +38,7 @@ public class PollManager {
 
     public void createPoll(Polls.Poll poll, String username) {
         Polls.User user = getUserByUsername(username);
+
         if(user == null) {
             throw new IllegalArgumentException("No user found");
         }
@@ -45,6 +47,9 @@ public class PollManager {
         poll.setPublishedAt(Instant.now());
         poll.setCreator(user.getUsername());
 
+        poll.getVoteOptions().forEach(option -> {
+            option.setOptionId(String.valueOf(voteOptionCounter++));
+        });
         // Add the poll to the hashmap
         polls.put(poll.getId(), poll);
         System.out.println("Poll created: " + poll + " by user: " + user.getUsername());
@@ -68,16 +73,19 @@ public class PollManager {
         if(user == null) {
             throw new IllegalArgumentException("User not found");
         }
-        Polls.VoteOption voteOption = poll.getVoteOptions().stream()
-                .filter(opt -> opt.getOptionId().equals(voteOptionId))
-                .findFirst().orElseThrow(() -> new IllegalArgumentException("Vote option not found"));
 
         Polls.Vote vote = new Polls.Vote();
         vote.setVoteId(UUID.randomUUID().toString());
         vote.setVoter(user);
-        vote.setVoteOption(voteOption);
+        vote.setOptionId(voteOptionId);
         vote.setPublishedAt(Instant.now());
+
+        if (poll.getVotes() == null) {
+            poll.setVotes(new ArrayList<>()); // Initialize if necessary
+        }
 
         poll.getVotes().add(vote);
     }
+
+
 }
